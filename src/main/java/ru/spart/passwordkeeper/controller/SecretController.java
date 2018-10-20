@@ -20,6 +20,7 @@ public class SecretController {
         secretService.add(newSecret);
         return ResponseEntity.ok().build();
     }
+    //test
 
     @PutMapping(value = "/secret/{id}")
     public ResponseEntity<Void> updateSecret(@PathVariable("id") long id, @RequestBody NewSecret newSecret) {
