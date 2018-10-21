@@ -8,7 +8,6 @@ import ru.spart.passwordkeeper.repository.Custom_Secret_Data_Repository;
 @Service
 public class SecretService {
 
-@Autowired
     private Custom_Secret_Data_Repository secretRepository;
 
     public void add(NewSecret newSecret) {

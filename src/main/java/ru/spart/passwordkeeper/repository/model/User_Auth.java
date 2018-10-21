@@ -7,6 +7,7 @@ import javax.persistence.*;
     public class User_Auth {
 
         @Id
+        @GeneratedValue
         @Column(name = "ID")
         private long id;
 

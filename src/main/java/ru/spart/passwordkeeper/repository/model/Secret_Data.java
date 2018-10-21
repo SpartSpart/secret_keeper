@@ -8,6 +8,7 @@ import javax.persistence.*;
 public class Secret_Data {
 
     @Id
+    @GeneratedValue
     @Column (name = "ID")
     private long id;
 
