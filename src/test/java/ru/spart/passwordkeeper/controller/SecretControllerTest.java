@@ -23,7 +23,7 @@ public class SecretControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    @Ignore
+    //@Ignore
     public void givenSecretWhenPostShouldOk() throws Exception {
         mockMvc.perform(post("/api/secret")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
