@@ -25,8 +25,11 @@ private Secret_Data_Repository secret_data_repository;
     }
 
     public void update(long id,NewSecret secret) {
-        NewSecret current_secret = secret_data_repository.findSecretById(id);
-        current_secret = secret;
+        secret_data_repository.findSecretById(id).setDescription(secret.getDescription());
+        secret_data_repository.findSecretById(id).setLogin(secret.getLogin());
+        secret_data_repository.findSecretById(id).setPassword(secret.getPassword());
+        secret_data_repository.findSecretById(id).setUser_id(secret.getUser_id());
+        secret_data_repository.flush();
 
     }
 
