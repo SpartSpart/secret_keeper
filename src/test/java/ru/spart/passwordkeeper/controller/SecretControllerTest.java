@@ -27,7 +27,7 @@ public class SecretControllerTest {
     public void givenSecretWhenPostShouldOk() throws Exception {
         mockMvc.perform(post("/api/secret")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content("{\"description\":\"test_description\",\"login\":\"test_login\",\"password\":\"test_password\"}")
+                .content("{\"description\":\"test_description\",\"login\":\"test_login\",\"password\":\"test_password\",\"user_id\":\"test_user_id\"}")
         ).andExpect(status().isOk());
     }
 
