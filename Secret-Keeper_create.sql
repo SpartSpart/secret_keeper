@@ -1,4 +1,4 @@
-create table User_Auth
+create table Users
 (
  id decimal IDENTITY(1,1) NOT NULL,  
  user_login varchar (30) NOT NULL,  
@@ -6,13 +6,13 @@ create table User_Auth
  CONSTRAINT  PK_ID_User PRIMARY KEY (id)
  );
 
-create table Secret_Data
+create table Secrets
 (
- s_id decimal IDENTITY(1,1) NOT NULL,  
- s_description varchar (50),
- s_login varchar (30),
- s_password varchar (30),  
- s_user_id decimal NOT NULL,  
- CONSTRAINT  PK_ID_Data PRIMARY KEY (s_id),
- CONSTRAINT FK_User FOREIGN KEY (s_user_id) REFERENCES User_Auth (id)
+ id decimal IDENTITY(1,1) NOT NULL,  
+ "description" varchar (50),
+ login varchar (30),
+ "password" varchar (30),  
+ "user_id" decimal NOT NULL,  
+ CONSTRAINT  PK_ID_Data PRIMARY KEY (id),
+ CONSTRAINT FK_User FOREIGN KEY ("user_id") REFERENCES "User" (id)
 );

@@ -2,11 +2,11 @@ package ru.spart.passwordkeeper.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.spart.passwordkeeper.controller.model.Secret;
 import ru.spart.passwordkeeper.controller.model.User;
 import ru.spart.passwordkeeper.repository.UserDataRepository;
 import ru.spart.passwordkeeper.repository.model.UserData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +19,8 @@ public class UserService {
     public void add(User user) {
         UserData newUser = new UserData();
 
-        newUser.setUser_login(user.getLogin());
-        newUser.setUser_password(user.getPassword());
+        newUser.setUserLogin(user.getLogin());
+        newUser.setUserPassword(user.getPassword());
 
         userDataRepository.saveAndFlush(newUser);
     }
@@ -28,8 +28,8 @@ public class UserService {
     public void update(long id, User user) {
         Optional<UserData> newUser = userDataRepository.findById(id);
 
-        newUser.get().setUser_password(user.getPassword());
-        newUser.get().setUser_login(user.getLogin());
+        newUser.get().setUserPassword(user.getPassword());
+        newUser.get().setUserLogin(user.getLogin());
 
         userDataRepository.saveAndFlush(newUser.get());
     }
@@ -39,22 +39,22 @@ public class UserService {
         User user = new User();
 
         user.setId(userData.get().getId());
-        user.setLogin(userData.get().getUser_login());
-        user.setPassword(userData.get().getUser_password());
+        user.setLogin(userData.get().getUserLogin());
+        user.setPassword(userData.get().getUserPassword());
 
         return user;
     }
 
 
     public List<User> getAllUsers() {
-        List<User> allUsers = null;
+        List<User> allUsers = new ArrayList<>();
         List<UserData> allUsersData = userDataRepository.findAll();
 
         for (UserData user : allUsersData) {
             User newUser = new User();
             newUser.setId(user.getId());
-            newUser.setLogin(user.getUser_login());
-            newUser.setPassword(user.getUser_password());
+            newUser.setLogin(user.getUserLogin());
+            newUser.setPassword(user.getUserPassword());
             allUsers.add(newUser);
         }
 

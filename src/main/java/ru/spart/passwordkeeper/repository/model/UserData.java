@@ -5,19 +5,19 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
     @Entity
-    @Table(name = "User")
+    @Table(name = "Users")
     public class UserData {
 
-        @GeneratedValue (generator = "increment")
-        @GenericGenerator(name = "increment",strategy = "increment")
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column (name = "ID",nullable = false)
         private long id;
 
         @Column(name = "USER_LOGIN")
-        private String user_login;
+        private String userLogin;
 
         @Column(name = "USER_PASSWORD")
-        private String user_password;
+        private String userPassword;
 
         public UserData() {}
 
@@ -27,20 +27,20 @@ import javax.persistence.*;
             this.id = id;
         }
 
-        public String getUser_login() {
-            return user_login;
+        public String getUserLogin() {
+            return userLogin;
         }
 
-        public void setUser_login(String user_login) {
-            this.user_login = user_login;
+        public void setUserLogin(String userLogin) {
+            this.userLogin = userLogin;
         }
 
-        public String getUser_password() {
-            return user_password;
+        public String getUserPassword() {
+            return userPassword;
         }
 
-        public void setUser_password(String user_password) {
-            this.user_password = user_password;
+        public void setUserPassword(String userPassword) {
+            this.userPassword = userPassword;
         }
     }
 

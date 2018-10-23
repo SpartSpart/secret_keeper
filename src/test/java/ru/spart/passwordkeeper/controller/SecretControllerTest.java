@@ -23,9 +23,9 @@ public class SecretControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    //@Ignore
+    @Ignore
     public void givenSecretWhenPostShouldOk() throws Exception {
-        mockMvc.perform(post("/api/secret")
+        mockMvc.perform(post("/api/secrets")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content("{\"description\":\"test_description\",\"login\":\"test_login\",\"password\":\"test_password\",\"user_id\":\"test_user_id\"}")
         ).andExpect(status().isOk());

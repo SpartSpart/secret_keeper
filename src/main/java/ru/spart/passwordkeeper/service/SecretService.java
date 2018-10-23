@@ -6,6 +6,7 @@ import ru.spart.passwordkeeper.controller.model.Secret;
 import ru.spart.passwordkeeper.repository.SecretDataRepository;
 import ru.spart.passwordkeeper.repository.model.SecretData;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,37 +17,36 @@ public class SecretService {
     private SecretDataRepository secretRepository;
 
     public void add(Secret secret) {
-        SecretData secret_data = new SecretData();
+        SecretData secretData = new SecretData();
 
-        secret_data.setDescription(secret.getDescription());
-        secret_data.setLogin(secret.getLogin());
-        secret_data.setPassword(secret.getPassword());
-        secret_data.setUser_id(secret.getUser_id());
+        secretData.setDescription(secret.getDescription());
+        secretData.setLogin(secret.getLogin());
+        secretData.setPassword(secret.getPassword());
+        secretData.setUserId(secret.getUserId());
 
-        secretRepository.saveAndFlush(secret_data);
+        secretRepository.saveAndFlush(secretData);
     }
 
     public void update(long id, Secret secret) {
-        Optional<SecretData> secret_data = secretRepository.findById(id); //need to learn Optional
+        Optional<SecretData> secretData = secretRepository.findById(id); //need to learn Optional//orElseThrow(secretnotfound::new)
 
-        secret_data.get().setDescription(secret.getDescription());
-        secret_data.get().setLogin(secret.getLogin());
-        secret_data.get().setPassword(secret.getPassword());
+        secretData.get().setDescription(secret.getDescription());
+        secretData.get().setLogin(secret.getLogin());
+        secretData.get().setPassword(secret.getPassword());
 
-        secretRepository.saveAndFlush(secret_data.get());
-
+        secretRepository.saveAndFlush(secretData.get());
     }
 
 
     public Secret getSecret(long id) {
-        Optional<SecretData> secret_data = secretRepository.findById(id);
+        Optional<SecretData> secretData = secretRepository.findById(id);
         Secret secret = new Secret();
 
-        secret.setId(secret_data.get().getId());
-        secret.setDescription(secret_data.get().getDescription());
-        secret.setLogin(secret_data.get().getLogin());
-        secret.setPassword(secret_data.get().getPassword());
-        secret.setUser_id(secret_data.get().getUser_id());
+        secret.setId(secretData.get().getId());
+        secret.setDescription(secretData.get().getDescription());
+        secret.setLogin(secretData.get().getLogin());
+        secret.setPassword(secretData.get().getPassword());
+        secret.setUserId(secretData.get().getUserId());
 
         return secret;
    }
@@ -58,7 +58,7 @@ public class SecretService {
 
 
     public List<Secret> getAllSecrets() {
-        List<Secret> allSecrets = null;
+        List<Secret> allSecrets = new ArrayList<>();
         List<SecretData> allSecretsData = secretRepository.findAll();
 
         for (SecretData secret : allSecretsData) {
@@ -67,7 +67,7 @@ public class SecretService {
             newSecret.setDescription(secret.getDescription());
             newSecret.setLogin(secret.getLogin());
             newSecret.setPassword(secret.getPassword());
-            newSecret.setUser_id(secret.getUser_id());
+            newSecret.setUserId(secret.getUserId());
             allSecrets.add(newSecret);
         }
 

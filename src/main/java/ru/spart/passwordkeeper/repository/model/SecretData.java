@@ -5,13 +5,12 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Secret")
+@Table(name = "Secrets")
 
 public class SecretData {
 
     @Id
-    @GeneratedValue (generator = "increment")
-    @GenericGenerator(name = "increment",strategy = "increment")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "ID",nullable = false)
     private long id;
 
@@ -25,7 +24,7 @@ public class SecretData {
     private String password;
 
     @Column (name = "USER_ID")
-    private long user_id;
+    private long userId;
 
     public SecretData() {
     }
@@ -60,11 +59,11 @@ public class SecretData {
         this.password = password;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 }

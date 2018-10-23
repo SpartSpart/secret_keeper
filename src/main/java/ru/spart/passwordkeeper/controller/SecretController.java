@@ -20,32 +20,32 @@ public class SecretController {
         this.secretService = secretService;
     }
 
-    @PostMapping(value = "/secret")
+    @PostMapping(value = "/secrets")
     public ResponseEntity<Void> addSecret(@RequestBody Secret secret) {
         secretService.add(secret);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/secret/{id}")
+    @PutMapping(value = "/secrets/{id}")
     public ResponseEntity<Void> updateSecret(@PathVariable("id") long id, @RequestBody Secret secret) {
         secretService.update(id, secret);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/secret/{id}")
+    @GetMapping(value = "/secrets/{id}")
     public ResponseEntity<Secret> getSecret(@PathVariable("id") long id) {
         return ResponseEntity
                 .ok()
                 .body(secretService.getSecret(id));
     }
 
-    @DeleteMapping(value = "/secret/{id}")
+    @DeleteMapping(value = "/secrets/{id}")
     public ResponseEntity<Void> deleteSecret(@PathVariable("id") long id) {
         secretService.deleteSecret(id);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/secret/getAll")
+    @GetMapping(value = "/secrets")
     public ResponseEntity<List<Secret>> getAllSecrets() {
         return ResponseEntity
                 .ok()
