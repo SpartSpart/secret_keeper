@@ -14,5 +14,5 @@ create table Secrets
  "password" varchar (30),  
  "user_id" decimal NOT NULL,  
  CONSTRAINT  PK_ID_Data PRIMARY KEY (id),
- CONSTRAINT FK_User FOREIGN KEY ("user_id") REFERENCES "User" (id)
+ CONSTRAINT FK_User FOREIGN KEY ("user_id") REFERENCES "Users" (id)
 );

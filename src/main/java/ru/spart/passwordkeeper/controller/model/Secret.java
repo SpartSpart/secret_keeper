@@ -6,7 +6,6 @@ public class Secret {
     private String description;
     private String login;
     private String password;
-    private long userId;
 
     public String getDescription() {return description;}
 
@@ -29,10 +28,6 @@ public class Secret {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public long getUserId() {return userId;}
-
-    public void setUserId(long userId) {this.userId = userId;}
 
     public long getId() {return id;}
 

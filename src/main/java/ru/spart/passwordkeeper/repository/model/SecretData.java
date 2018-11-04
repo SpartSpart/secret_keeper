@@ -1,7 +1,5 @@
 package ru.spart.passwordkeeper.repository.model;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
 @Entity
@@ -11,25 +9,28 @@ public class SecretData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column (name = "ID",nullable = false)
+    @Column(name = "ID", nullable = false)
     private long id;
 
-    @Column (name = "DESCRIPTION")
+    @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column (name = "LOGIN")
+    @Column(name = "LOGIN")
     private String login;
 
-    @Column (name = "PASSWORD")
+    @Column(name = "PASSWORD")
     private String password;
 
-    @Column (name = "USER_ID")
-    private long userId;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID", nullable = false)
+    private UserData userData;
 
     public SecretData() {
     }
 
-    public long getId() {return id;}
+    public long getId() {
+        return id;
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -59,11 +60,11 @@ public class SecretData {
         this.password = password;
     }
 
-    public long getUserId() {
-        return userId;
+    public UserData getUserData() {
+        return userData;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 }

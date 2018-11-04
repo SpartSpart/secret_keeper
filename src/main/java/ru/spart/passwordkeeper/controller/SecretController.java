@@ -2,8 +2,10 @@ package ru.spart.passwordkeeper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.Secret;
+import ru.spart.passwordkeeper.service.SecretNotFound;
 import ru.spart.passwordkeeper.service.SecretService;
 
 import java.util.List;
@@ -20,31 +22,48 @@ public class SecretController {
         this.secretService = secretService;
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/secrets")
     public ResponseEntity<Void> addSecret(@RequestBody Secret secret) {
         secretService.add(secret);
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping(value = "/secrets/{id}")
     public ResponseEntity<Void> updateSecret(@PathVariable("id") long id, @RequestBody Secret secret) {
-        secretService.update(id, secret);
+        try {
+            secretService.update(id, secret);
+        } catch (SecretNotFound secretNotFound) {
+            throw new ApiNotFound();
+        }
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/secrets/{id}")
     public ResponseEntity<Secret> getSecret(@PathVariable("id") long id) {
-        return ResponseEntity
-                .ok()
-                .body(secretService.getSecret(id));
+        try {
+            return ResponseEntity
+                    .ok()
+                    .body(secretService.getSecret(id));
+        } catch (SecretNotFound secretNotFound) {
+            throw new ApiNotFound();
+        }
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping(value = "/secrets/{id}")
     public ResponseEntity<Void> deleteSecret(@PathVariable("id") long id) {
-        secretService.deleteSecret(id);
+        try {
+            secretService.deleteSecret(id);
+        } catch (SecretNotFound secretNotFound) {
+            throw new ApiNotFound();
+        }
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping(value = "/secrets")
     public ResponseEntity<List<Secret>> getAllSecrets() {
         return ResponseEntity

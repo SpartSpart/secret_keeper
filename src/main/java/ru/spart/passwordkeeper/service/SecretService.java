@@ -1,65 +1,78 @@
 package ru.spart.passwordkeeper.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.spart.passwordkeeper.controller.model.Secret;
 import ru.spart.passwordkeeper.repository.SecretDataRepository;
+import ru.spart.passwordkeeper.repository.UserDataRepository;
 import ru.spart.passwordkeeper.repository.model.SecretData;
+import ru.spart.passwordkeeper.repository.model.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class SecretService {
 
-    @Autowired
-    private SecretDataRepository secretRepository;
+    private final SecretDataRepository secretRepository;
+    private final UserDataRepository userDataRepository;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
 
+    public SecretService(SecretDataRepository secretRepository, UserDataRepository userDataRepository, UserDetailsServiceImpl userDetailsServiceImpl) {
+        this.secretRepository = secretRepository;
+        this.userDataRepository = userDataRepository;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    }
+
+    @Transactional
     public void add(Secret secret) {
         SecretData secretData = new SecretData();
-
         secretData.setDescription(secret.getDescription());
         secretData.setLogin(secret.getLogin());
         secretData.setPassword(secret.getPassword());
-        secretData.setUserId(secret.getUserId());
+        secretData.setUserData(getUserData());
 
         secretRepository.saveAndFlush(secretData);
     }
 
-    public void update(long id, Secret secret) {
-        Optional<SecretData> secretData = secretRepository.findById(id); //need to learn Optional//orElseThrow(secretnotfound::new)
+    @Transactional
+    public void update(long id, Secret secret) throws SecretNotFound {
+        SecretData secretData = secretRepository.findByIdAndUserData(id, getUserData())
+                .orElseThrow(SecretNotFound::new);
 
-        secretData.get().setDescription(secret.getDescription());
-        secretData.get().setLogin(secret.getLogin());
-        secretData.get().setPassword(secret.getPassword());
+        secretData.setDescription(secret.getDescription());
+        secretData.setLogin(secret.getLogin());
+        secretData.setPassword(secret.getPassword());
 
-        secretRepository.saveAndFlush(secretData.get());
+        secretRepository.saveAndFlush(secretData);
     }
 
-
-    public Secret getSecret(long id) {
-        Optional<SecretData> secretData = secretRepository.findById(id);
+    @Transactional(readOnly = true)
+    public Secret getSecret(long id) throws SecretNotFound {
+        SecretData secretData = secretRepository.findByIdAndUserData(id, getUserData())
+                .orElseThrow(SecretNotFound::new);
         Secret secret = new Secret();
 
-        secret.setId(secretData.get().getId());
-        secret.setDescription(secretData.get().getDescription());
-        secret.setLogin(secretData.get().getLogin());
-        secret.setPassword(secretData.get().getPassword());
-        secret.setUserId(secretData.get().getUserId());
+        secret.setId(secretData.getId());
+        secret.setDescription(secretData.getDescription());
+        secret.setLogin(secretData.getLogin());
+        secret.setPassword(secretData.getPassword());
 
         return secret;
-   }
-
-
-    public void deleteSecret(long id) {
-        secretRepository.deleteById(id);
     }
 
+    @Transactional
+    public void deleteSecret(long id) throws SecretNotFound {
+        SecretData secretData = secretRepository.findByIdAndUserData(id, getUserData())
+                .orElseThrow(SecretNotFound::new);
+        secretRepository.deleteById(secretData.getId());
+    }
 
+    @Transactional
     public List<Secret> getAllSecrets() {
         List<Secret> allSecrets = new ArrayList<>();
-        List<SecretData> allSecretsData = secretRepository.findAll();
+        List<SecretData> allSecretsData = secretRepository.findAllByUserData(getUserData());
 
         for (SecretData secret : allSecretsData) {
             Secret newSecret = new Secret();
@@ -67,10 +80,15 @@ public class SecretService {
             newSecret.setDescription(secret.getDescription());
             newSecret.setLogin(secret.getLogin());
             newSecret.setPassword(secret.getPassword());
-            newSecret.setUserId(secret.getUserId());
             allSecrets.add(newSecret);
         }
 
         return allSecrets;
+    }
+
+    private UserData getUserData() {
+        UserDetails userDetails = userDetailsServiceImpl.getCurrent();
+        return userDataRepository.findByUserLogin(userDetails.getUsername())
+                .orElseThrow(RuntimeException::new);
     }
 }

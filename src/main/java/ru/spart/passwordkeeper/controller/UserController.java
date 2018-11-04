@@ -4,51 +4,49 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.User;
-import ru.spart.passwordkeeper.service.UserService;
-
-import java.util.List;
+import ru.spart.passwordkeeper.service.UserRegisterService;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-    private final UserService userService;
+    private final UserRegisterService userRegisterService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
+    public UserController(UserRegisterService userRegisterService) {
+        this.userRegisterService = userRegisterService;
     }
 
     @PostMapping(value = "/add")
     public ResponseEntity<Void> addUser(@RequestBody User user) {
-        userService.add(user);
+        userRegisterService.register(user);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/update/{id}")
-    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user){
-        userService.update(id,user);
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping(value = "/update/{id}")
+//    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user){
+//        userRegisterService.update(id,user);
+//        return ResponseEntity.ok().build();
+//    }
+//
+//    @GetMapping(value = "/get/{id}")
+//    public ResponseEntity<User> getUser(@PathVariable("id") long id){
+//        return ResponseEntity
+//                .ok()
+//                .body(userRegisterService.getUser(id));
+//    }
 
-    @GetMapping(value = "/get/{id}")
-    public ResponseEntity<User> getUser(@PathVariable("id") long id){
-        return ResponseEntity
-                .ok()
-                .body(userService.getUser(id));
-    }
+//    @GetMapping(value = "/getAll")
+//    public ResponseEntity<List<User>> getAllUsers(){
+//        return ResponseEntity
+//                .ok()
+//                .body(userRegisterService.getAllUsers());
+//    }
 
-    @GetMapping(value = "/getAll")
-    public ResponseEntity<List<User>> getAllUsers(){
-        return ResponseEntity
-                .ok()
-                .body(userService.getAllUsers());
-    }
-
-    @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
-        userService.deleteSecret(id);
-        return ResponseEntity.ok().build();
-    }
+//    @DeleteMapping(value = "/delete/{id}")
+//    public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
+//        userRegisterService.deleteSecret(id);
+//        return ResponseEntity.ok().build();
+//    }
 
 }
