@@ -2,6 +2,7 @@ package ru.spart.passwordkeeper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.User;
 import ru.spart.passwordkeeper.service.UserRegisterService;
@@ -22,6 +23,9 @@ public class UserController {
         userRegisterService.register(user);
         return ResponseEntity.ok().build();
     }
+
+
+
 
 //    @PutMapping(value = "/update/{id}")
 //    public ResponseEntity<Void> updateUser(@PathVariable("id") long id, @RequestBody User user){

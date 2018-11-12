@@ -30,8 +30,7 @@ public class SecurityConfiguration {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.antMatcher("/api/secrets/*")
-                    .authorizeRequests().anyRequest().permitAll()
+            http.authorizeRequests().antMatchers("/api/secrets/*", "/api/login").permitAll()
                     .and()
                     .httpBasic()
                     .and().csrf().disable();

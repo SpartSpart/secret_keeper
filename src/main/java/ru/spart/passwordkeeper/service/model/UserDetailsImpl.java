@@ -9,10 +9,13 @@ public class UserDetailsImpl implements UserDetails {
 
     private final String login;
     private final String password;
+    private final String email;
 
-    public UserDetailsImpl(String login, String password) {
+
+    public UserDetailsImpl(String login, String password, String email) {
         this.login = login;
         this.password = password;
+        this.email = email;
     }
 
 
@@ -29,6 +32,10 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return login;
+    }
+
+    public String getUseremail() {
+        return email;
     }
 
     @Override

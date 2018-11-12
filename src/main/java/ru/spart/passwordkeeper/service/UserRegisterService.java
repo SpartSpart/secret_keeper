@@ -1,6 +1,5 @@
 package ru.spart.passwordkeeper.service;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.spart.passwordkeeper.controller.model.User;
@@ -17,7 +16,8 @@ public class UserRegisterService {
     }
 
     public void register(User user){
-        UserDetails userDetails =new UserDetailsImpl(user.getLogin(),passwordEncoder.encode(user.getPassword()));
+        UserDetailsImpl userDetails =new UserDetailsImpl(user.getLogin(),passwordEncoder.encode(user.getPassword()),user.getEmail());
         userDetailsServiceImpl.add(userDetails);
     }
+
 }

@@ -27,13 +27,15 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Transactional
-    public void add(UserDetails userDetails) {
+    public void add(UserDetailsImpl userDetails) {
 
         UserData newUser = new UserData();
         newUser.setUserLogin(userDetails.getUsername());
         newUser.setUserPassword(userDetails.getPassword());
+        newUser.setUserEmail(userDetails.getUseremail());
         userDataRepository.saveAndFlush(newUser);
     }
+
 
     public void update(long id, User user) {
         Optional<UserData> newUser = userDataRepository.findById(id);
@@ -78,11 +80,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
         UserData userData = userDataRepository.findByUserLogin(login).orElseThrow(() -> new UsernameNotFoundException("User not found"));
-        UserDetails userDetails = new UserDetailsImpl(login, userData.getUserPassword());
+        UserDetails userDetails = new UserDetailsImpl(login, userData.getUserPassword(), userData.getUserEmail());
         return userDetails;
     }
 
     public UserDetails getCurrent() {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
+
+
 }
