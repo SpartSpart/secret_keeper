@@ -2,8 +2,10 @@ package ru.spart.passwordkeeper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ru.spart.passwordkeeper.controller.model.User;
 import ru.spart.passwordkeeper.service.UserRegisterService;
 
@@ -20,11 +22,12 @@ public class UserController {
 
     @PostMapping(value = "/add")
     public ResponseEntity<Void> addUser(@RequestBody User user) {
-        userRegisterService.register(user);
-        return ResponseEntity.ok().build();
+       userRegisterService.register(user);
+            return ResponseEntity.ok().build();
+//        else
+//            return ResponseEntity.badRequest().build();
+
     }
-
-
 
 
 //    @PutMapping(value = "/update/{id}")

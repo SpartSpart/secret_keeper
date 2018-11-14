@@ -88,5 +88,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+    public boolean isUser(String login){
+        if(!userDataRepository.findByUserLogin(login).equals(null))
+            return true;
+        return false;
+    }
+
 
 }

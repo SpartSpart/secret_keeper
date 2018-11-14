@@ -10,6 +10,7 @@ import ru.spart.passwordkeeper.repository.model.SecretData;
 import ru.spart.passwordkeeper.repository.model.UserData;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -26,7 +27,7 @@ public class SecretService {
     }
 
     @Transactional
-    public void add(Secret secret) {
+    public Long add(Secret secret) {
         SecretData secretData = new SecretData();
         secretData.setDescription(secret.getDescription());
         secretData.setLogin(secret.getLogin());
@@ -34,6 +35,7 @@ public class SecretService {
         secretData.setUserData(getUserData());
 
         secretRepository.saveAndFlush(secretData);
+        return secretData.getId();
     }
 
     @Transactional
@@ -46,6 +48,19 @@ public class SecretService {
         secretData.setPassword(secret.getPassword());
 
         secretRepository.saveAndFlush(secretData);
+    }
+
+    @Transactional
+    public void updateAll(List<Secret> secrets) throws SecretNotFound {
+        ArrayList<Secret> secretArrayList = new ArrayList<>(secrets);
+        for (Secret secret : secretArrayList) {
+            SecretData secretData = (secretRepository.findById(secret.getId())
+                    .orElseThrow(SecretNotFound::new));
+            secretData.setDescription(secret.getDescription());
+            secretData.setLogin((secret.getLogin()));
+            secretData.setPassword(secret.getPassword());
+            secretRepository.saveAndFlush(secretData);
+        }
     }
 
     @Transactional(readOnly = true)

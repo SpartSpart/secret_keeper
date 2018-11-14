@@ -8,6 +8,7 @@ import ru.spart.passwordkeeper.controller.model.Secret;
 import ru.spart.passwordkeeper.service.SecretNotFound;
 import ru.spart.passwordkeeper.service.SecretService;
 
+import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,10 @@ public class SecretController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping(value = "/secrets")
-    public ResponseEntity<Void> addSecret(@RequestBody Secret secret) {
-        secretService.add(secret);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Long> addSecret(@RequestBody Secret secret) {
+        return ResponseEntity
+                .ok()
+                .body(secretService.add(secret));
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -37,6 +39,13 @@ public class SecretController {
         } catch (SecretNotFound secretNotFound) {
             throw new ApiNotFound();
         }
+        return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PutMapping(value = "/secrets")
+    public ResponseEntity<Void> updateAllSecrets(@RequestBody List<Secret> secrets) throws SecretNotFound {
+        secretService.updateAll(secrets);
         return ResponseEntity.ok().build();
     }
 

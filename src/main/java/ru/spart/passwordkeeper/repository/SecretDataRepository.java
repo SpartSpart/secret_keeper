@@ -14,4 +14,6 @@ public interface SecretDataRepository extends JpaRepository<SecretData,Long> {
     Optional<SecretData> findByIdAndUserData(Long id, UserData userData);
 
     List<SecretData> findAllByUserData(UserData userData);
+
+    Optional<SecretData> findById(Long id);
 }

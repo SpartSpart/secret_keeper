@@ -18,6 +18,7 @@ public class UserRegisterService {
     public void register(User user){
         UserDetailsImpl userDetails =new UserDetailsImpl(user.getLogin(),passwordEncoder.encode(user.getPassword()),user.getEmail());
         userDetailsServiceImpl.add(userDetails);
+
     }
 
 }
