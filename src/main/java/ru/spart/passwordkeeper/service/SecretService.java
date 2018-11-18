@@ -54,12 +54,20 @@ public class SecretService {
     public void updateAll(List<Secret> secrets) throws SecretNotFound {
         ArrayList<Secret> secretArrayList = new ArrayList<>(secrets);
         for (Secret secret : secretArrayList) {
-            SecretData secretData = (secretRepository.findById(secret.getId())
-                    .orElseThrow(SecretNotFound::new));
-            secretData.setDescription(secret.getDescription());
-            secretData.setLogin((secret.getLogin()));
-            secretData.setPassword(secret.getPassword());
-            secretRepository.saveAndFlush(secretData);
+            if(secret.getDescription().equals("")
+                    &&secret.getLogin().equals("")
+                    &&secret.getPassword().equals("")){
+                deleteSecret(secret.getId());
+            }
+            else {
+                SecretData secretData = (secretRepository.findById(secret.getId())
+                        .orElseThrow(SecretNotFound::new));
+                secretData.setDescription(secret.getDescription());
+                secretData.setLogin((secret.getLogin()));
+                secretData.setPassword(secret.getPassword());
+                secretRepository.saveAndFlush(secretData);
+            }
+
         }
     }
 
