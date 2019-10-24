@@ -51,8 +51,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 //        User user = new User();
 //
 //        user.setId(userData.get().getId());
-//        user.setLogin(userData.get().getUserLogin());
-//        user.setPassword(userData.get().getUserPassword());
+//        user.setType_id(userData.get().getUserLogin());
+//        user.setCount(userData.get().getUserPassword());
 //
 //        return user;
 //    }

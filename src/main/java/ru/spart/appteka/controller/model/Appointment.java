@@ -2,15 +2,15 @@ package ru.spart.appteka.controller.model;
 
 public class Appointment {
     private long id;
-    private String type;
+    private String appointment;
 
     public long getId() {return id;}
 
     public void setId(long id) {this.id = id;}
 
-    public String getLogin() {return type;}
+    public String getAppointment() {return appointment;}
 
-    public void setLogin(String login) {this.type = type;}
+    public void setAppointment(String appointment) {this.appointment = appointment;}
 
 
 }
