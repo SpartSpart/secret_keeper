@@ -5,10 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.Secret;
-import ru.spart.passwordkeeper.service.SecretNotFound;
+import ru.spart.passwordkeeper.service.exception.SecretNotFound;
 import ru.spart.passwordkeeper.service.SecretService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -78,6 +77,17 @@ public class SecretController {
         return ResponseEntity
                 .ok()
                 .body(secretService.getAllSecrets());
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping (value = "/secrets/delete")
+    public ResponseEntity<Void> deleteListSecret(@RequestBody List<Long> idList) {
+        try {
+            secretService.deleteListSecrets(idList);
+        } catch (SecretNotFound secretNotFound) {
+            throw new ApiNotFound();
+        }
+        return ResponseEntity.ok().build();
     }
 
 }

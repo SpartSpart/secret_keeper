@@ -8,9 +8,9 @@ import ru.spart.passwordkeeper.repository.SecretDataRepository;
 import ru.spart.passwordkeeper.repository.UserDataRepository;
 import ru.spart.passwordkeeper.repository.model.SecretData;
 import ru.spart.passwordkeeper.repository.model.UserData;
+import ru.spart.passwordkeeper.service.exception.SecretNotFound;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Service
@@ -90,6 +90,12 @@ public class SecretService {
         SecretData secretData = secretRepository.findByIdAndUserData(id, getUserData())
                 .orElseThrow(SecretNotFound::new);
         secretRepository.deleteById(secretData.getId());
+    }
+
+    @Transactional
+    public void deleteListSecrets(List<Long> idList) throws SecretNotFound {
+        for (Long id: idList)
+            secretRepository.deleteById(id);
     }
 
     @Transactional
