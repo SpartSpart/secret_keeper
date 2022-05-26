@@ -16,6 +16,7 @@ public class LoginController {
     @PostMapping(value = "/login")
     public ResponseEntity<Void> loginUser() {
         return ResponseEntity.ok().build();
+
     }
 
 }
