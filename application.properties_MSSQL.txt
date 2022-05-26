@@ -1,0 +1,11 @@
+spring.datasource.url=jdbc:sqlserver://127.0.0.1:1433;databaseName=Secrets-Keeper
+spring.datasource.username=sa
+spring.datasource.password=12345678
+server.port=58440
+spring.datasource.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+spring.jpa.hibernate.dialect=org.hibernate.dialect.SQLServer2008Dialect
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=none
+hibernate.temp.use_jdbc_metadata_defaults=false
+spring.servlet.multipart.max-file-size=30MB
+spring.servlet.multipart.max-request-size=30MB

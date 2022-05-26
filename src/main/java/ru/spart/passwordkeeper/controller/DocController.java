@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.Doc;
 import ru.spart.passwordkeeper.service.exception.DocNotFound;
 import ru.spart.passwordkeeper.service.DocService;
+import ru.spart.passwordkeeper.service.exception.SecretNotFound;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -61,4 +62,14 @@ public class DocController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @DeleteMapping(value = "/docs/{id}")
+    public ResponseEntity<Void> deleteDoc(@PathVariable("id") long id) throws FileNotFoundException {
+        try {
+            docService.deleteDoc(id);
+        } catch (DocNotFound docNotFound) {
+            throw new ApiNotFound();
+        }
+        return ResponseEntity.ok().build();
+    }
 }

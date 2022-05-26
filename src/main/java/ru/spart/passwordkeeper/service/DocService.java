@@ -7,8 +7,10 @@ import ru.spart.passwordkeeper.controller.model.Doc;
 import ru.spart.passwordkeeper.repository.DocDataRepository;
 import ru.spart.passwordkeeper.repository.UserDataRepository;
 import ru.spart.passwordkeeper.repository.model.DocData;
+import ru.spart.passwordkeeper.repository.model.SecretData;
 import ru.spart.passwordkeeper.repository.model.UserData;
 import ru.spart.passwordkeeper.service.exception.DocNotFound;
+import ru.spart.passwordkeeper.service.exception.SecretNotFound;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -45,6 +47,12 @@ public class DocService {
             fileService.deleteListFilesOfDeletingDoc(id);
             docDataRepository.deleteById(id);
         }
+    }
+
+    @Transactional
+    public void deleteDoc(long id) throws DocNotFound, FileNotFoundException {
+        fileService.deleteListFilesOfDeletingDoc(id);
+        docDataRepository.deleteById(id);
     }
 
     @Transactional

@@ -9,7 +9,7 @@ create table Docs
 );
 create table Files
 (
- id decimal IDENTITY(1,1) NOT NULL,  
+ id decimal IDENTITY(1,1) NOT NULL,
  "file" varbinary (MAX),
  doc_id decimal NOT NULL,
  CONSTRAINT  PK_ID_Files PRIMARY KEY (id),
