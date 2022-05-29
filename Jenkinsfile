@@ -6,8 +6,8 @@ pipeline {
             steps {
                // echo 'Hello World'
 		//sh 'gradle clean build'
-		sh './gradlew build '
-		sh './gradlew run'
+		sh 'sudo ./gradlew build '
+		sh 'sudo ./gradlew run'
             }
         }
     }
