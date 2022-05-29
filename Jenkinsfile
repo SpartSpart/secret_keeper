@@ -4,10 +4,10 @@ pipeline {
     stages {
         stage('Hello') {
             steps {
-               // echo 'Hello World'
-		sh 'gradle clean build'
-		//sh 'sudo ./gradlew build '
-		sh 'gradle bootRun'
+		        sh 'gradle clean build'
+		        sh 'docker build -t password-keeper:1.0.0 .'
+		        sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
+                sh 'docker run -d -p 58440:58440 --name password-keeper-api password-keeper:1.0.0'
             }
         }
     }
