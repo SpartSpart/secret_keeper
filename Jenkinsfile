@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Hello') {
+        stage('Build_run') {
             steps {
 		        sh 'gradle clean build'
 		        sh 'docker build -t password-keeper:1.0.0 .'
