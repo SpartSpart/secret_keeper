@@ -5,9 +5,9 @@ pipeline {
         stage('Hello') {
             steps {
                // echo 'Hello World'
-		//sh 'gradle clean build'
-		sh 'sudo ./gradlew build '
-		sh 'sudo ./gradlew run'
+		sh 'gradle clean build'
+		//sh 'sudo ./gradlew build '
+		sh 'gradle bootRun'
             }
         }
     }
