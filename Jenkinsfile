@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clean_Build') {
             steps {
-              	    sh 'gradle clean build-environment-bundle -P environmentType=dev'
+              	    sh 'gradle clean build-environment-bundle -Penv=dev'
             }
         }
         stage ('Docker job'){
