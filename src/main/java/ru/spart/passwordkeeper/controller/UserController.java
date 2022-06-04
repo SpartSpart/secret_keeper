@@ -2,22 +2,24 @@ package ru.spart.passwordkeeper.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.spart.passwordkeeper.controller.model.User;
+import ru.spart.passwordkeeper.service.UserDetailsServiceImpl;
 import ru.spart.passwordkeeper.service.UserRegisterService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
     private final UserRegisterService userRegisterService;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    public UserController(UserRegisterService userRegisterService) {
+    public UserController(UserRegisterService userRegisterService, UserDetailsServiceImpl userDetailsService) {
         this.userRegisterService = userRegisterService;
+        this.userDetailsService = userDetailsService;
     }
 
     @PostMapping(value = "/add")
@@ -43,12 +45,12 @@ public class UserController {
 //                .body(userRegisterService.getUser(id));
 //    }
 
-//    @GetMapping(value = "/getAll")
-//    public ResponseEntity<List<User>> getAllUsers(){
-//        return ResponseEntity
-//                .ok()
-//                .body(userRegisterService.getAllUsers());
-//    }
+    @GetMapping(value = "/getAll")
+    public ResponseEntity<List<User>> getAllUsers(){
+        return ResponseEntity
+                .ok()
+                .body(userDetailsService.getAllUsers());
+    }
 
 //    @DeleteMapping(value = "/delete/{id}")
 //    public ResponseEntity<Void> deleteUser(@PathVariable("id") long id) {
