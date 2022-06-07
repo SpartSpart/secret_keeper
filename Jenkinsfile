@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent qa_agent1
 
     stages {
         stage('Clean_Build') {
