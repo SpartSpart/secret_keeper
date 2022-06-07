@@ -1,5 +1,7 @@
 pipeline {
-    agent qa_agent1
+    agent {
+    label "qa_agent1"
+    }
 
     stages {
         stage('Clean_Build') {
