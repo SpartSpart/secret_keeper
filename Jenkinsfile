@@ -17,8 +17,7 @@ pipeline {
             }
         }
     }
-}
-pipeline {
+
     agent {
     label "dev_agent2"
     }
