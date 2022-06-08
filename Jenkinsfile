@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Clean_Build_QA') {
         agent {
-            "qa_agent1"
+           label "qa_agent1"
         }
             steps {
               	    sh 'gradle clean build'
@@ -14,7 +14,7 @@ pipeline {
         }
         stage ('Docker_job_QA'){
          agent {
-            "qa_agent1"
+           label "qa_agent1"
          }
             steps {
                     sh 'docker build -t password-keeper-api:1.0.0 .'
@@ -25,7 +25,7 @@ pipeline {
 
         stage('Clean_Build_DEV') {
                 agent {
-                    "dev_agent2"
+                   label "dev_agent2"
                 }
                     steps {
                       	    sh 'gradle clean build'
@@ -33,7 +33,7 @@ pipeline {
                 }
                 stage ('Docker_job_DEV'){
                  agent {
-                    "dev_agent2"
+                    label "dev_agent2"
                  }
                     steps {
                             sh 'docker build -t password-keeper-api:1.0.0 .'
