@@ -1,40 +1,45 @@
 pipeline {
     agent {
-    label "qa_agent1"
+    label none
     }
 
     stages {
-        stage('Clean_Build') {
+        stage('Clean_Build_QA') {
+        agent {
+            "qa_agent1"
+        }
             steps {
               	    sh 'gradle clean build'
             }
         }
-        stage ('Docker job'){
+        stage ('Docker_job_QA'){
+         agent {
+            "qa_agent1"
+         }
             steps {
                     sh 'docker build -t password-keeper-api:1.0.0 .'
                     sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
                     sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
             }
         }
-    }
 
-    agent {
-    label "dev_agent2"
-    }
-
-    stages {
-        stage('Clean_Build') {
-            steps {
-              	    sh 'gradle clean build'
-            }
-        }
-        stage ('Docker job'){
-            steps {
-                    sh 'docker build -t password-keeper-api:1.0.0 .'
-                    sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                    sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
-            }
-        }
+        stage('Clean_Build_DEV') {
+                agent {
+                    "dev_agent2"
+                }
+                    steps {
+                      	    sh 'gradle clean build'
+                    }
+                }
+                stage ('Docker_job_DEV'){
+                 agent {
+                    "dev_agent2"
+                 }
+                    steps {
+                            sh 'docker build -t password-keeper-api:1.0.0 .'
+                            sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
+                            sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
+                    }
+                }
     }
 }
-
