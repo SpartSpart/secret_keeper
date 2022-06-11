@@ -1,13 +1,25 @@
-def agentLabel
-if (BRANCH_NAME == "master") {
-    agentLabel = "dev_agent2"
-} else {
-    agentLabel = "qa_agent1"
-}
-
 pipeline {
-    agent none
+    agent any
+    environment {
+            CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
+        }
     stages {
+        stage ('Setup'){
+            agent any
+                steps{
+                //IT WORKS
+                    echo "SourceBrunch= " + GIT_BRANCH
+                    script{
+                        if (CURRENT_GIT_BRANCH == "origin/master")
+                                                         agentLabel = "qa_agent1"
+                                                      else
+                                                         agentLabel = "dev_agent2"
+                    }
+
+             }
+
+
+        }
         stage('Clean_Build') {
         agent {
            label agentLabel
