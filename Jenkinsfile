@@ -1,11 +1,11 @@
 def agentLabel
-if (BRANCH_NAME == "master") {
+if (branch == "/master") {
     agentLabel = "dev_agent2"
 } else {
     agentLabel = "qa_agent1"
 }
 
-when { branch "/master/*" }
+// when { branch "/master/*" }
 pipeline {
     agent none
     stages {
