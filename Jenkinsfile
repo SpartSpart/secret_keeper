@@ -3,7 +3,6 @@ pipeline {
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
         }
-
     stages {
         stage ('Setup'){
         agent any
@@ -18,8 +17,7 @@ pipeline {
 
            }
         }
-
-        stage('Clean_Build ' + agentLabel) {
+        stage('Clean_Build') {
         agent {
            label agentLabel
         }
@@ -27,8 +25,7 @@ pipeline {
               	    sh 'gradle clean build'
            }
         }
-
-        stage ('Docker_job' + agentLabel){
+        stage ('Docker_job'){
         agent {
            label agentLabel
          }
@@ -38,6 +35,5 @@ pipeline {
                     sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
            }
         }
-
     }
 }
