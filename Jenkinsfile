@@ -10,9 +10,11 @@ pipeline {
     agent none
     stages {
         stage ('Test'){
-        agent any
-            sh 'echo "Pulling..." + env.BRANCH_NAME'
-            }
+            agent any
+                steps{
+                    echo "Pulling..." + env.BRANCH_NAME
+                    }
+        }
         stage('Clean_Build') {
         agent {
            label agentLabel
