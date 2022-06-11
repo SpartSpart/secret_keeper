@@ -15,6 +15,7 @@ pipeline {
                                  agentLabel = "qa_agent1"
                              }
                      }
+                     echo "branch = " + agentLabel
                }
         }
         stage('Clean_Build') {
