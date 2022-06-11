@@ -1,14 +1,16 @@
+
+
+// when { branch "/master/*" }
+pipeline {
 def agentLabel
 if (GIT_BRANCH == "origin/master") {
     agentLabel = "dev_agent2"
 } else {
     agentLabel = "qa_agent1"
 }
-
-// when { branch "/master/*" }
-pipeline {
     agent none
     stages {
+    if
 //         stage ('Test'){
 //             agent any
 //                 steps{
