@@ -17,13 +17,13 @@ pipeline {
         stage ('Setup'){
            steps{
                 echo "branch0 = " + BRANCH
-//                 echo "branch1 = " + GIT_BRANCH
+                echo "branch1 = " + ${GIT_BRANCH}
 //                 echo "branch55 = " + GIT_BRANCH
                     script {
-                    if (env.GIT_BRANCH == 'origin/master') {
+                    if (${GIT_BRANCH} == 'origin/master') {
                     echo "COOOOL"
                     }
-                     echo "branch1 = " + "${GIT_BRANCH}"
+                     echo "branch1 = " + ${GIT_BRANCH}
                              if (env.GIT_BRANCH == "origin/master") {
                                  agentLabel = "dev_agent2"
                              } else {
