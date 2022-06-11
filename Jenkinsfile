@@ -3,22 +3,23 @@ pipeline {
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
         }
+
     stages {
         stage ('Setup'){
-            agent any
-                steps{
-                //IT WORKS
-                    echo "SourceBrunch= " + GIT_BRANCH
-                    script{
-                        if (CURRENT_GIT_BRANCH == "origin/master")
-                                agentLabel = "dev_agent2"
-                        else
-                                agentLabel = "qa_agent1"
-                    }
-
+        agent any
+           steps{
+             echo "SourceBrunch= " + GIT_BRANCH
+             script{
+                if (CURRENT_GIT_BRANCH == "origin/master")
+                   agentLabel = "dev_agent2"
+                else
+                   agentLabel = "qa_agent1"
              }
+
+           }
         }
-        stage('Clean_Build') {
+
+        stage('Clean_Build ' + agentLabel) {
         agent {
            label agentLabel
         }
@@ -26,7 +27,8 @@ pipeline {
               	    sh 'gradle clean build'
            }
         }
-        stage ('Docker_job'){
+
+        stage ('Docker_job' + agentLabel){
         agent {
            label agentLabel
          }
