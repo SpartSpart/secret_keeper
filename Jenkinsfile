@@ -5,35 +5,22 @@ pipeline {
 
 
     agent none
-
-    environment {
-
-              BRANCH = "${GIT_BRANCH}"
-
-
-        }
-
     stages {
         stage ('Setup'){
-             echo 'Pulling... ' + env.GIT_BRANCH
+            agent any
            steps{
-                echo "branch0 = " + BRANCH
-                echo 'Pulling... ' + env.GIT_BRANCH
-                echo "branch1 = " + ${GIT_BRANCH}
-//                 echo "branch55 = " + GIT_BRANCH
+
+                               echo "Pulling..." + env.BRANCH_NAME
+                               echo "SourceBrach= " + GIT_BRANCH
+                              }
                     script {
-                    if (${GIT_BRANCH} == 'origin/master') {
-                    echo "COOOOL"
-                    }
-                     echo "branch1 = " + ${GIT_BRANCH}
-                             if (env.GIT_BRANCH == "origin/master") {
+                             if (GIT_BRANCH == "origin/master") {
                                  agentLabel = "dev_agent2"
                              } else {
                                  agentLabel = "qa_agent1"
                              }
                      }
-                sh 'printenv'
-                     echo "branch2 = " + agentLabel
+                     echo "bran"
                }
         }
         stage('Clean_Build') {
