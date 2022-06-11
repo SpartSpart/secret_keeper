@@ -16,14 +16,14 @@ pipeline {
     stages {
         stage ('Setup'){
            steps{
-                    script {
+
                             echo "branch1 = " + GIT_BRANCH
                              if (GIT_BRANCH == "origin/master") {
                                  agentLabel = "dev_agent2"
                              } else {
                                  agentLabel = "qa_agent1"
                              }
-                     }
+
                 sh 'printenv'
                      echo "branch2 = " + agentLabel
                }
