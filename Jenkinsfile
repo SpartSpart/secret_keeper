@@ -9,6 +9,10 @@ if (branch == "/master") {
 pipeline {
     agent none
     stages {
+        stage ('Test'){
+        agent any
+            echo 'Pulling...' + env.BRANCH_NAME
+            }
         stage('Clean_Build') {
         agent {
            label agentLabel
