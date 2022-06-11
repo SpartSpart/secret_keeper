@@ -15,6 +15,7 @@ pipeline {
 
     stages {
         stage ('Setup'){
+             echo 'Pulling... ' + env.GIT_BRANCH
            steps{
                 echo "branch0 = " + BRANCH
                 echo 'Pulling... ' + env.GIT_BRANCH
