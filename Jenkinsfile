@@ -16,6 +16,7 @@ pipeline {
             agent any
                 steps{
                 //IT WORKS
+                    echo FOO
                     echo "SourceBrach= " + GIT_BRANCH
              }
         }
