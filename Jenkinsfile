@@ -10,7 +10,6 @@ if (GIT_BRANCH == "origin/master") {
 }
     agent none
     stages {
-    if
 //         stage ('Test'){
 //             agent any
 //                 steps{
