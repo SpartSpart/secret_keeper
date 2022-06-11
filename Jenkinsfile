@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label agentLabel
+        label master
     }
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
@@ -8,7 +8,7 @@ pipeline {
     stages {
         stage ('Setup'){
                 agent {
-                    label agentLabel
+                    label master
                 }
                 steps{
                 //IT WORKS
