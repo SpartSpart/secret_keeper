@@ -1,11 +1,15 @@
 pipeline {
-    agent master
+    agent {
+        label agentLabel
+    }
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
         }
     stages {
         stage ('Setup'){
-            agent master
+                agent {
+                    label agentLabel
+                }
                 steps{
                 //IT WORKS
                     echo "SourceBrunch= " + GIT_BRANCH
