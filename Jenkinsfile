@@ -7,7 +7,9 @@ pipeline {
     agent none
 
     environment {
-            BRANCH = GIT_BRANCH
+
+              BRANCH = "${GIT_BRANCH}"
+
 
         }
 
@@ -16,7 +18,7 @@ pipeline {
            steps{
                     script {
                             echo "branch1 = " + GIT_BRANCH
-                             if (GIT_BRANCH == "origin/master") {
+                             if (BRANCH == "origin/master") {
                                  agentLabel = "dev_agent2"
                              } else {
                                  agentLabel = "qa_agent1"
