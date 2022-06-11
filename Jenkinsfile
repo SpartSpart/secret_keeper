@@ -13,6 +13,7 @@ pipeline {
             agent any
                 steps{
                     echo "Pulling..." + env.BRANCH_NAME
+                    echo "SourceBrach= " + GIT_BRANCH
                     }
         }
         stage('Clean_Build') {
