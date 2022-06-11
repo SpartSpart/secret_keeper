@@ -8,7 +8,7 @@ pipeline {
 
     environment {
 
-              BRANCH = ${GIT_BRANCH}
+              BRANCH = "${GIT_BRANCH}"
 
 
         }
