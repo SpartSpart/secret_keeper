@@ -1,11 +1,3 @@
-// def agentLabel
-// if (branch == "/master") {
-//     agentLabel = "dev_agent2"
-// } else {
-//     agentLabel = "qa_agent1"
-// }
-
-// when { branch "/master/*" }
 pipeline {
     agent any
     environment {
@@ -16,13 +8,12 @@ pipeline {
             agent any
                 steps{
                 //IT WORKS
-                    echo FOO
-                    echo "SourceBrach= " + GIT_BRANCH
+                    echo "SourceBrunch= " + GIT_BRANCH
                     script{
                         if (CURRENT_GIT_BRANCH == "origin/master")
                                                          agentLabel = "qa_agent1"
                                                       else
-                                                         agentLabel = dev_agent2
+                                                         agentLabel = "dev_agent2"
                     }
 
              }
