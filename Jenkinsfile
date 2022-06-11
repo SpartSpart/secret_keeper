@@ -5,16 +5,23 @@ pipeline {
 
 
     agent none
+
+    environment {
+            BRANCH = GIT_BRANCH
+
+        }
+
     stages {
         stage ('Setup'){
            steps{
-                    script {
-                             if (GIT_BRANCH == "origin/master") {
-                                 agentLabel = "dev_agent2"
-                             } else {
-                                 agentLabel = "qa_agent1"
-                             }
-                     }
+//                     script {
+//                              if (GIT_BRANCH == "origin/master") {
+//                                  agentLabel = "dev_agent2"
+//                              } else {
+//                                  agentLabel = "qa_agent1"
+//                              }
+//                      }
+                sh 'printenv'
                      echo "branch = " + agentLabel
                }
         }
