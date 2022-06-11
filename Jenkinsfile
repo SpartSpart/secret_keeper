@@ -11,9 +11,9 @@ pipeline {
                     echo "SourceBrunch= " + GIT_BRANCH
                     script{
                         if (CURRENT_GIT_BRANCH == "origin/master")
-                                                         agentLabel = "dev_agent2"
-                                                      else
-                                                         agentLabel = "qa_agent1"
+                            agentLabel = "dev_agent2"
+                        else
+                            agentLabel = "qa_agent1"
                     }
 
              }
