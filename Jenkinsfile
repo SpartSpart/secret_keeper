@@ -18,7 +18,7 @@ pipeline {
            steps{
                 echo "branch0 = " + BRANCH
                     script {
-                            echo "branch1 = " + env.GIT_BRANCH
+                            echo "branch1 = " + "${GIT_BRANCH}"
                              if (env.GIT_BRANCH == "origin/master") {
                                  agentLabel = "dev_agent2"
                              } else {
