@@ -2,12 +2,14 @@
 
 // when { branch "/master/*" }
 pipeline {
-def agentLabel
-if (GIT_BRANCH == "origin/master") {
-    agentLabel = "dev_agent2"
-} else {
-    agentLabel = "qa_agent1"
-}
+script {
+         if (GIT_BRANCH == "origin/master") {
+             agentLabel = "dev_agent2"
+         } else {
+             agentLabel = "qa_agent1"
+         }
+          }
+
     agent none
     stages {
 //         stage ('Test'){
