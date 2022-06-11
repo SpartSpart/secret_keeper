@@ -1,18 +1,24 @@
+def agentLabel
+if (BRANCH_NAME == "master") {
+    agentLabel = "dev_agent2"
+} else {
+    agentLabel = "qa_agent1"
+}
+
 pipeline {
     agent none
-
     stages {
-        stage('Clean_Build_QA') {
+        stage('Clean_Build') {
         agent {
-           label "qa_agent1"
+           label agentLabel
         }
            steps {
               	    sh 'gradle clean build'
            }
         }
-        stage ('Docker_job_QA'){
+        stage ('Docker_job'){
         agent {
-           label "qa_agent1"
+           label agentLabel
          }
            steps {
                     sh 'docker build -t password-keeper-api:1.0.0 .'
@@ -21,23 +27,5 @@ pipeline {
            }
         }
 
-        stage('Clean_Build_DEV') {
-                agent {
-                   label "dev_agent2"
-                }
-                    steps {
-                      	    sh 'gradle clean build'
-                    }
-                }
-                stage ('Docker_job_DEV'){
-                 agent {
-                    label "dev_agent2"
-                 }
-                    steps {
-                            sh 'docker build -t password-keeper-api:1.0.0 .'
-                            sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                            sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
-                    }
-                }
     }
 }
