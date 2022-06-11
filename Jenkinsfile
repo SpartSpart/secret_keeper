@@ -6,17 +6,17 @@ pipeline {
 
     agent none
 
-//     environment {
-//
-//               BRANCH = "${GIT_BRANCH}"
-//
-//
-//         }
+    environment {
+
+              BRANCH = ${GIT_BRANCH}
+
+
+        }
 
     stages {
         stage ('Setup'){
            steps{
-                echo "branch0 = " + GIT_BRANCH
+                echo "branch0 = " + BRANCH
                     script {
                             echo "branch1 = " + env.GIT_BRANCH
                              if (env.GIT_BRANCH == "origin/master") {
