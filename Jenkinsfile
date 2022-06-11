@@ -5,6 +5,7 @@ if (BRANCH_NAME == "master") {
     agentLabel = "qa_agent1"
 }
 
+when { branch "/master/*" }
 pipeline {
     agent none
     stages {
