@@ -9,7 +9,7 @@
 pipeline {
     agent any
     environment {
-            FOO = "${GIT_BRANCH}
+            FOO = "${GIT_BRANCH}"
         }
     stages {
         stage ('Setup'){
