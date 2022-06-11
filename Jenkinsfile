@@ -17,6 +17,8 @@ pipeline {
         stage ('Setup'){
            steps{
                 echo "branch0 = " + BRANCH
+                echo "branch1 = " + "${GIT_BRANCH}"
+                echo "branch55 = " + GIT_BRANCH
                     script {
                             echo "branch1 = " + "${GIT_BRANCH}"
                              if (env.GIT_BRANCH == "origin/master") {
