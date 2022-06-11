@@ -7,14 +7,17 @@
 
 // when { branch "/master/*" }
 pipeline {
-    agent none
+    agent any
+    environment {
+            FOO = GIT_BRANCH
+        }
     stages {
-        stage ('Test'){
+        stage ('Setup'){
             agent any
                 steps{
-                    echo "Pulling..." + env.BRANCH_NAME
+                //IT WORKS
                     echo "SourceBrach= " + GIT_BRANCH
-                    }
+             }
         }
         stage('Clean_Build') {
         agent {
