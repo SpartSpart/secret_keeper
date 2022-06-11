@@ -1,9 +1,9 @@
-def agentLabel
-if (branch == "/master") {
-    agentLabel = "dev_agent2"
-} else {
-    agentLabel = "qa_agent1"
-}
+// def agentLabel
+// if (branch == "/master") {
+//     agentLabel = "dev_agent2"
+// } else {
+//     agentLabel = "qa_agent1"
+// }
 
 // when { branch "/master/*" }
 pipeline {
