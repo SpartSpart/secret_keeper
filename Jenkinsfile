@@ -2,23 +2,21 @@
 
 // when { branch "/master/*" }
 pipeline {
-script {
-         if (GIT_BRANCH == "origin/master") {
-             agentLabel = "dev_agent2"
-         } else {
-             agentLabel = "qa_agent1"
-         }
-          }
+
 
     agent none
     stages {
-//         stage ('Test'){
-//             agent any
-//                 steps{
-//                     echo "Pulling..." + env.BRANCH_NAME
-//                     echo "SourceBrach= " + GIT_BRANCH
-//                     }
-//         }
+        stage ('Setup'){
+           steps{
+                    script {
+                             if (GIT_BRANCH == "origin/master") {
+                                 agentLabel = "dev_agent2"
+                             } else {
+                                 agentLabel = "qa_agent1"
+                             }
+                     }
+               }
+        }
         stage('Clean_Build') {
         agent {
            label agentLabel
