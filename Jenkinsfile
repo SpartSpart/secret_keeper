@@ -1,12 +1,20 @@
+// def agentLabel
+// if (branch == "/master") {
+//     agentLabel = "dev_agent2"
+// } else {
+//     agentLabel = "qa_agent1"
+// }
+
+// when { branch "/master/*" }
 pipeline {
     agent none
     stages {
-        stage ('Setup'){
+        stage ('Test'){
             agent any
                 steps{
                     echo "Pulling..." + env.BRANCH_NAME
                     echo "SourceBrach= " + GIT_BRANCH
-               }
+                    }
         }
         stage('Clean_Build') {
         agent {
