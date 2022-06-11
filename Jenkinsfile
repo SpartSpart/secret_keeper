@@ -1,28 +1,12 @@
 pipeline {
     agent any
     environment {
-            CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
+            AGENT = "dev_agent2"
         }
     stages {
-        stage ('Setup'){
-            agent any
-                steps{
-                //IT WORKS
-                    echo "SourceBrunch= " + GIT_BRANCH
-                    script{
-                        if (CURRENT_GIT_BRANCH == "origin/master")
-                                                         agentLabel = "dev_agent2"
-                                                      else
-                                                         agentLabel = "qa_agent1"
-                    }
-
-             }
-
-
-        }
         stage('Clean_Build') {
         agent {
-           label agentLabel
+           label AGENT
         }
            steps {
               	    sh 'gradle clean build'
@@ -30,7 +14,7 @@ pipeline {
         }
         stage ('Docker_job'){
         agent {
-           label agentLabel
+           label AGENT
          }
            steps {
                     sh 'docker build -t password-keeper-api:1.0.0 .'
