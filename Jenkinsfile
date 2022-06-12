@@ -7,7 +7,7 @@ pipeline {
             DB_PASSWORD = "postgres"
             API = "api"
             DOCKERHUB=credentials('dockerhub')
-            TAG = ${BUILD_NUMBER}
+            TAG = "${BUILD_NUMBER}"
         }
     stages {
         stage ('Setup'){
