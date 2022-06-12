@@ -60,6 +60,7 @@ pipeline {
                    steps {
                         sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
                         sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.$TAG'
+                        sh 'docker rm spartspart/password-keeper-api:1.0.$TAG'
                    }
         }
     }
