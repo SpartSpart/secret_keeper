@@ -34,39 +34,33 @@ pipeline {
               	    sh 'gradle clean build'
            }
         }
-//         stage ('Docker_job'){
-//         agent {
-//            label agentLabel
-//          }
-//            steps {
-//                     sh 'docker build -t password-keeper-api:1.0.0 .'
-//                     sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-//                     sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
-//            }
-//         }
-        ///
-        stage ('Docker_push'){
+        stage ('Docker_build'){
                 agent {
                    label agentLabel
                  }
                    steps {
-
-                        sh 'docker build -t password-keeper-api:$TAG .'
-                        sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
-                        sh 'docker tag password-keeper-api:$TAG spartspart/password-keeper-api:$TAG';
-                        //sh 'docker tag $TAG password-keeper-api '
-                        sh 'docker push spartspart/password-keeper-api:$TAG'
-//                         script{
-//                             api = docker build("password-keeper-api", "./")
-//                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-//                                         api.push("password-keeper-api.${env.BUILD_NUMBER}")
-//                                     }
-//                         }
-//                             sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-//                             sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api'
+                        sh 'docker build -t password-keeper-api:1.0.$TAG .'
+                        sh 'docker tag password-keeper-api:1.0.$TAG spartspart/password-keeper-api:1.0.$TAG';
                    }
-                }
-        ///
+        }
 
+        stage ('Docker_push_dockerhub'){
+                agent {
+                   label agentLabel
+                 }
+                   steps {
+                        sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
+                        sh 'docker push spartspart/password-keeper-api:1.0.$TAG'
+                   }
+        }
+        stage ('Docker_run'){
+                agent {
+                   label agentLabel
+                 }
+                   steps {
+                        sh 'docker stop password-keeper-api:* || true && docker rm password-keeper-api:* || true'
+                        sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api:1.0.$TAG password-keeper-api:1.0.$TAG'
+                   }
+        }
     }
 }
