@@ -11,14 +11,9 @@ pipeline {
             TAG = "${BUILD_NUMBER}"
         }
     stages {
-        stage ('Setup'){
+        stage ('Setup_branch'){
         agent any
            steps{
-             echo "SourceBrunch= " + GIT_BRANCH
-             echo "db_name= " + DB_NAME
-             echo "db_login= " + DB_LOGIN
-             echo "db_password= " + DB_PASSWORD
-             echo "db_password= " + API_PORT
              script{
                 if (CURRENT_GIT_BRANCH == "origin/master")
                    agentLabel = "dev_agent2"
@@ -41,12 +36,10 @@ pipeline {
                    label agentLabel
                  }
                    steps {
-//                    --build-arg HTTP_PROXY=http://10.20.30.2:1234
                         sh 'docker build -t password-keeper-api:1.0.$TAG .'
                         sh 'docker tag password-keeper-api:1.0.$TAG spartspart/password-keeper-api:1.0.$TAG';
                    }
         }
-
         stage ('Docker_push_dockerhub'){
                 agent {
                    label agentLabel
@@ -68,6 +61,14 @@ pipeline {
                         --env DB_NAME=${DB_NAME}\
                         --env API_PORT=${API_PORT}\
                         --name password-keeper-api password-keeper-api:1.0.$TAG'
+                   }
+        }
+        stage ('Success'){
+                agent {
+                   label agentLabel
+                 }
+                   steps {
+                        echo "Success"
                    }
         }
     }
