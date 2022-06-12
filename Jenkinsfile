@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
-            DB_NAME = "secretsdb"
+            DB_NAME = "${DB_NAME}"
             DB_LOGIN = "postgres"
             DB_PASSWORD = "postgres"
         }
