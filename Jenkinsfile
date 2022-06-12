@@ -5,6 +5,7 @@ pipeline {
             DB_NAME = "${DB_NAME}"
             DB_LOGIN = "postgres"
             DB_PASSWORD = "postgres"
+            API
         }
     stages {
         stage ('Setup'){
@@ -43,7 +44,6 @@ pipeline {
 //         }
         ///
         stage ('Docker_push'){
-        def api
                 agent {
                    label agentLabel
                  }
@@ -51,7 +51,7 @@ pipeline {
                         script{
                             api = sh 'docker build -t password-keeper-api .'
                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-                                        app.push("password-keeper-api.${env.BUILD_NUMBER}")
+                                        api.push("password-keeper-api.${env.BUILD_NUMBER}")
                                     }
                         }
                             sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
