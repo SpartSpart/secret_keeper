@@ -62,11 +62,11 @@ pipeline {
                  }
                    steps {
                         sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                        sh 'docker run -d --net=host -p 58440:58440
-                        --env DB_LOGIN=${DB_LOGIN}
-                        --env DB_PASSWORD=${DB_PASSWORD}
-                        --env DB_NAME=${DB_NAME}
-                        --env API_PORT=${API_PORT}
+                        sh 'docker run -d --net=host -p 58440:58440\
+                        --env DB_LOGIN=${DB_LOGIN}\
+                        --env DB_PASSWORD=${DB_PASSWORD}\
+                        --env DB_NAME=${DB_NAME}\
+                        --env API_PORT=${API_PORT}\
                         --name password-keeper-api password-keeper-api:1.0.$TAG'
                    }
         }
