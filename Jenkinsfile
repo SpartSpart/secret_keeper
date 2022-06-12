@@ -2,12 +2,18 @@ pipeline {
     agent any
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
+            DB_NAME = "secretsdb"
+            DB_LOGIN = "postgres"
+            DB_PASSWORD = "postgres"
         }
     stages {
         stage ('Setup'){
         agent any
            steps{
              echo "SourceBrunch= " + GIT_BRANCH
+             echo "db_name= " + DB_NAME
+             echo "db_login= " + DB_LOGIN
+             echo "db_password= " + DB_PASSWORD
              script{
                 if (CURRENT_GIT_BRANCH == "origin/master")
                    agentLabel = "dev_agent2"
