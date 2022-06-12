@@ -49,7 +49,7 @@ pipeline {
                  }
                    steps {
                         script{
-                            api = docker build("spartspart/password-keeper-api:password-keeper-api")
+                            api = docker build("password-keeper-api")
                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                                         api.push("password-keeper-api.${env.BUILD_NUMBER}")
                                     }
