@@ -40,7 +40,7 @@ pipeline {
                  }
                    steps {
 //                    --build-arg HTTP_PROXY=http://10.20.30.2:1234
-                        sh 'docker build -t password-keeper-api:1.0.$TAG --env DB_LOGIN=${DB_LOGIN} .'
+                        sh 'docker build -t password-keeper-api:1.0.$TAG .'
                         sh 'docker tag password-keeper-api:1.0.$TAG spartspart/password-keeper-api:1.0.$TAG';
                    }
         }
@@ -60,7 +60,7 @@ pipeline {
                  }
                    steps {
                         sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                        sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.$TAG'
+                        sh 'docker run -d --net=host -p 58440:58440 --env DB_LOGIN=${DB_LOGIN} --name password-keeper-api password-keeper-api:1.0.$TAG'
                    }
         }
     }
