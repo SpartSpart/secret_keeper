@@ -31,15 +31,31 @@ pipeline {
               	    sh 'gradle clean build'
            }
         }
-        stage ('Docker_job'){
-        agent {
-           label agentLabel
-         }
-           steps {
-                    sh 'docker build -t password-keeper-api:1.0.0 .'
-                    sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                    sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
-           }
-        }
+//         stage ('Docker_job'){
+//         agent {
+//            label agentLabel
+//          }
+//            steps {
+//                     sh 'docker build -t password-keeper-api:1.0.0 .'
+//                     sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
+//                     sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api:1.0.0'
+//            }
+//         }
+        ///
+        stage ('Docker_push'){
+                agent {
+                   label agentLabel
+                 }
+                   steps {
+                            api = docker build -t password-keeper-api .
+                            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                                        app.push("password-keeper-api.${env.BUILD_NUMBER}")
+                                    }
+                            docker stop password-keeper-api || true && docker rm password-keeper-api || true
+                            docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api
+                   }
+                }
+        ///
+
     }
 }
