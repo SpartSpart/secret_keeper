@@ -48,11 +48,11 @@ pipeline {
                  }
                    steps {
                             api = docker build -t password-keeper-api .
-                            docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+                            sh 'docker.withRegistry("https://registry.hub.docker.com, "dockerhub") {
                                         app.push("password-keeper-api.${env.BUILD_NUMBER}")
-                                    }
-                            docker stop password-keeper-api || true && docker rm password-keeper-api || true
-                            docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api
+                                    }'
+                            sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
+                            sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api'
                    }
                 }
         ///
