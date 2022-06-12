@@ -43,6 +43,7 @@ pipeline {
 //         }
         ///
         stage ('Docker_push'){
+        def api
                 agent {
                    label agentLabel
                  }
