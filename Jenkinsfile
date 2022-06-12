@@ -6,6 +6,7 @@ pipeline {
             DB_LOGIN = "postgres"
             DB_PASSWORD = "postgres"
             API = "api"
+            DOCKERHUB=credentials('dockerhub')
         }
     stages {
         stage ('Setup'){
@@ -48,14 +49,17 @@ pipeline {
                    label agentLabel
                  }
                    steps {
-                        script{
-                            api = docker build("password-keeper-api", "./")
-                            docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
-                                        api.push("password-keeper-api.${env.BUILD_NUMBER}")
-                                    }
-                        }
-                            sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                            sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api'
+                        sh 'docker build -t password-keeper-api:1.0.0 .'
+                        sh 'echo ${DOCKERHUB} | docker login -u ${DOCKERHUB} --password-stdin'
+                        sh 'docker push spartspart/password-keeper-api:1.0.0'
+//                         script{
+//                             api = docker build("password-keeper-api", "./")
+//                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
+//                                         api.push("password-keeper-api.${env.BUILD_NUMBER}")
+//                                     }
+//                         }
+//                             sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
+//                             sh 'docker run -d --net=host -p 58440:58440 --name password-keeper-api password-keeper-api'
                    }
                 }
         ///
