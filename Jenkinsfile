@@ -3,9 +3,10 @@ pipeline {
     environment {
             CURRENT_GIT_BRANCH = "${GIT_BRANCH}"
             DB_NAME = "${DB_NAME}"
-            DB_LOGIN = "postgres"
-            DB_PASSWORD = "postgres"
-            API = "api"
+            DB_LOGIN = "${DB_LOGIN}"
+            DB_PASSWORD = "${DB_PASSWORD}"
+            API_PORT = "${API_PORT}"
+
             DOCKERHUB=credentials('dockerhub')
             TAG = "${BUILD_NUMBER}"
         }
@@ -17,6 +18,7 @@ pipeline {
              echo "db_name= " + DB_NAME
              echo "db_login= " + DB_LOGIN
              echo "db_password= " + DB_PASSWORD
+             echo "db_password= " + API_PORT
              script{
                 if (CURRENT_GIT_BRANCH == "origin/master")
                    agentLabel = "dev_agent2"
@@ -60,7 +62,12 @@ pipeline {
                  }
                    steps {
                         sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                        sh 'docker run -d --net=host -p 58440:58440 --env DB_LOGIN=${DB_LOGIN} --name password-keeper-api password-keeper-api:1.0.$TAG'
+                        sh 'docker run -d --net=host -p 58440:58440
+                        --env DB_LOGIN=${DB_LOGIN}
+                        --env DB_PASSWORD=${DB_PASSWORD}
+                        --env DB_NAME=${DB_NAME}
+                        --env API_PORT=${API_PORT}
+                        --name password-keeper-api password-keeper-api:1.0.$TAG'
                    }
         }
     }
