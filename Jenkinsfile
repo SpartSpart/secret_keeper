@@ -63,13 +63,12 @@ pipeline {
                         --name password-keeper-api password-keeper-api:1.0.$TAG'
                    }
         }
-        stage ('Success'){
+        stage ('Remove old images'){
                 agent {
                    label agentLabel
                  }
                    steps {
-                        sh'docker rmi $(docker images | grep "password-keeper-api:1.0.^$TAG")'
-                        sh'docker rmi $(docker images | grep "spartspart/password-keeper-api:1.0.^$TAG")'
+                        sh 'docker image prune -a --force --filter "until=1h")'
                         echo "Success"
                    }
         }
