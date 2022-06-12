@@ -51,9 +51,9 @@ pipeline {
                  }
                    steps {
 
-                        sh 'docker build -t password-keeper-api:1.0.$TAG .'
+                        sh 'docker build -t password-keeper-api:1.0.0 .'
                         sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
-                        sh 'docker push spartspart/password-keeper-api:1.0.$TAG'
+                        sh 'docker push spartspart/password-keeper-api:1.0.0'
 //                         script{
 //                             api = docker build("password-keeper-api", "./")
 //                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
