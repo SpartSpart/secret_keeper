@@ -5,7 +5,7 @@ pipeline {
             DB_NAME = "${DB_NAME}"
             DB_LOGIN = "postgres"
             DB_PASSWORD = "postgres"
-            API
+            API = "api"
         }
     stages {
         stage ('Setup'){
