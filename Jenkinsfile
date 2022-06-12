@@ -68,7 +68,8 @@ pipeline {
                    label agentLabel
                  }
                    steps {
-                        sh'docker rmi $(docker images | grep "password-keeper-api")'
+                        sh'docker rmi $(docker images | grep "password-keeper-api:1.0.^$TAG")'
+                        sh'docker rmi $(docker images | grep "spartspart/password-keeper-api:1.0.^$TAG")'
                         echo "Success"
                    }
         }
