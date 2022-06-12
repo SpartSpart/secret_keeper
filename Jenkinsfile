@@ -47,7 +47,7 @@ pipeline {
                    label agentLabel
                  }
                    steps {
-                            api = docker build -t password-keeper-api .
+                            api = sh 'docker build -t password-keeper-api .'
                             docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                                         app.push("password-keeper-api.${env.BUILD_NUMBER}")
                                     }
