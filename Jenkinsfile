@@ -48,7 +48,7 @@ pipeline {
                  }
                    steps {
                             api = docker build -t password-keeper-api .
-                            sh 'docker.withRegistry("https://registry.hub.docker.com, "dockerhub") {
+                            sh 'docker.withRegistry("https://registry.hub.docker.com", "dockerhub") {
                                         app.push("password-keeper-api.${env.BUILD_NUMBER}")
                                     }'
                             sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
