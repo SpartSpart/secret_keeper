@@ -68,7 +68,7 @@ pipeline {
                    label agentLabel
                  }
                    steps {
-                        sh 'docker image prune -a --force --filter "until=1h")'
+                        sh 'docker image prune -a --force --filter "until=1h"'
                         echo "Success"
                    }
         }
