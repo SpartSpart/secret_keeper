@@ -40,7 +40,7 @@ pipeline {
                  }
                    steps {
 //                    --build-arg HTTP_PROXY=http://10.20.30.2:1234
-                        sh 'docker build -t --build-arg DB_LOGIN=$DB_LOGIN password-keeper-api:1.0.$TAG .'
+                        sh 'docker build -t password-keeper-api:1.0.$TAG --build-arg DB_LOGIN=${DB_LOGIN} .'
                         sh 'docker tag password-keeper-api:1.0.$TAG spartspart/password-keeper-api:1.0.$TAG';
                    }
         }
