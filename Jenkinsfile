@@ -55,7 +55,7 @@ pipeline {
                  }
                    steps {
                         sh 'docker stop password-keeper-api || true && docker rm password-keeper-api || true'
-                        sh 'docker run -d --net=host -p 58440:58440\
+                        sh 'docker run -d --net=host -p $API_PORT:$API_PORT\
                         --env DB_LOGIN=${DB_LOGIN}\
                         --env DB_PASSWORD=${DB_PASSWORD}\
                         --env DB_NAME=${DB_NAME}\
@@ -68,6 +68,7 @@ pipeline {
                    label agentLabel
                  }
                    steps {
+                        sh'docker rmi $(docker images | grep "password-keeper-api")'
                         echo "Success"
                    }
         }
