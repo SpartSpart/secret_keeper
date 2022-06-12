@@ -51,9 +51,9 @@ pipeline {
                  }
                    steps {
 
-                        sh 'docker build -t password-keeper-api .'
+                        sh 'docker build -t password-keeper-api:$TAG .'
                         sh 'echo $DOCKERHUB_PSW | docker login -u $DOCKERHUB_USR --password-stdin'
-                        sh 'docker tag spartspart/password-keeper-api:$TAG';
+                        sh 'docker tag password-keeper-api:$TAG spartspart/password-keeper-api:$TAG';
                         //sh 'docker tag $TAG password-keeper-api '
                         sh 'docker push spartspart/password-keeper-api:$TAG'
 //                         script{
